@@ -1,0 +1,11 @@
+<p>first works!</p>
+<p>Name: {{ name }}</p>
+<p>Description: {{ description }}</p>
+<p>Price: {{ price }}</p>
+<p>Category: {{ category }}</p>
+<p>Is Available: {{ isAvailable }}</p>
+<p>Items:</p>
+<ng-container *ngFor="let item of items">
+    <p>{{ item }}</p>
+</ng-container>
+

@@ -1,0 +1,8 @@
+<h2>{{ product.name }}</h2>
+<ul>
+    <li>Description: {{ product.description }}</li>
+    <li>Price: {{ product.price }}$</li>
+    <li>Category: {{ product.category }}</li>
+    <li>{{ product.isAvailable ? "Available" : "Not available"}}</li>
+</ul>
+<button [disabled]="!product.isAvailable" (click)="onAddToCart()">Buy</button>
