@@ -2,9 +2,9 @@
 
 <div *ngIf="cartProducts.length > 0 else emptyCart">
     <ul>
-        <ng-container *ngFor="let product of cartProducts; trackBy: trackByProducts">
-            <li>{{ product.name }}</li>
-        </ng-container>
+        <li *ngFor="let product of cartProducts; trackBy: trackByProducts">
+          {{ product.name }}
+        </li>
     </ul>
     <button (click)="onEmptyCart()">Empty cart</button>
 </div>
