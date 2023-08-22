@@ -25,3 +25,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - category enum
 - cart-list component
 - cart service
+
+## [1.0.2] - 2023-08-22
+
+### Added
+
+- cart-item component
+- cart-item model
+- modules
+- highlight directive
+- bootstrap packages
+
+
+### Changed
+
+- cart service - new methods
+- cart list component to use cart-item component
+- product model
+- product component to use OnPush strategy and adding to cart functionality

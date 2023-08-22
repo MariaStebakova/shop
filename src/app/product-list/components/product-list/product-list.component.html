@@ -1,5 +1,3 @@
-<h1>Product List</h1>
+<h2>Product List</h2>
 
-<ng-container *ngFor="let product of products">
-    <app-product [product]="product"></app-product>
-</ng-container>
+<app-product *ngFor="let product of products" [product]="product" (addToCart)="onAddToCart($event)"></app-product>

@@ -1,0 +1,19 @@
+<div appHighlight>
+  <div>
+    <div class="remove-button">
+      <i class="bi bi-trash3" (click)="onDeleteItem()"></i>
+    </div>
+    <div class="text-div">
+      <h3>{{cartItem.product.name}},</h3>
+      <h4>{{cartItem.product.price}}</h4>
+    </div>
+  </div>
+  <div>
+    Count:
+    <i class="bi bi-dash-circle" (click)="onQuantityDecrease()"></i>
+    &nbsp;
+    <span>{{cartItem.quantity}}</span>
+    &nbsp;
+    <i class="bi bi-plus-circle" (click)="onQuantityIncrease()"></i>
+  </div>
+</div>

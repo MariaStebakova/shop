@@ -1,17 +1,19 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 
 import { ProductModel } from "../../../shared/models/product.model";
 
 @Component({
   selector: "app-product",
   templateUrl: "./product.component.html",
-  styleUrls: ["./product.component.css"]
+  styleUrls: ["./product.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent {
 
   @Input() product!: ProductModel;
+  @Output() addToCart: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
 
   onAddToCart() {
-    console.log(`Product ${this.product.name} is added to cart.`);
+    this.addToCart.emit(this.product);
   }
 }
