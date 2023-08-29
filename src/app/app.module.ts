@@ -7,6 +7,9 @@ import { FirstComponent } from './first/first.component';
 import { CartModule } from './cart-list/cart.module';
 import { ProductsModule } from './product-list/products.module';
 import { SharedModule } from './shared/shared.module';
+import { APPINFO } from './core/services/constants.service';
+import { GeneratorFactory, GeneratorToken5 } from './core/services/generator.factory';
+import { GeneratorService } from './core/services/generator';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { SharedModule } from './shared/shared.module';
     ProductsModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    { provide: APPINFO, useValue: { App: "Shop", Ver: "1.0", APP_URL: "https://localhost:4200/"} },
+    { provide: GeneratorToken5, useFactory: GeneratorFactory(5), deps: [GeneratorService] }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

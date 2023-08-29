@@ -43,3 +43,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - cart list component to use cart-item component
 - product model
 - product component to use OnPush strategy and adding to cart functionality
+
+## [1.0.3] - 2023-08-29
+
+### Added
+
+- config model
+- config-options service
+- appInfo injection token
+- gen-id generator
+- generator factory
+- local-storage service
+- border style change directive. used in product component
+
+
+### Changed
+
+- cart-item component's change detection strategy to onPush
+- cart service to use BehaviorSubject for cartItems
+- cart-list component to get cartItems from Observable via async pipe
+- bootstrap version from 5.3.1 to 3.4.1
+- bootstrap css styles usage
+- first component to use all new services

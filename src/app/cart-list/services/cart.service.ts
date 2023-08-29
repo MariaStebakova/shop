@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs/internal/Subject";
 
 import { ProductModel } from "src/app/shared/models/product.model";
 import { CartItemModel } from "../models/cart-item.model";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class CartService {
 
-  cartListChanged$: Subject<void> = new Subject();
+  cartItems$$: BehaviorSubject<CartItemModel[]> = new BehaviorSubject<CartItemModel[]>([]);
   private cartItems: CartItemModel[] = [];
 
   get totalCost(): number {
@@ -30,49 +30,59 @@ export class CartService {
     return total;
   }
 
+  get isEmptyCart(): boolean {
+    return this.cartItems.length <= 0;
+  }
+
   constructor() { }
 
-  getCartProducts(): CartItemModel[] {
-    return this.cartItems;
+  getProducts(): Observable<CartItemModel[]> {
+    return this.cartItems$$.asObservable();
   }
 
-  emptyCart(): void {
+  removeAllProducts(): void {
     this.cartItems = [];
-    this.cartListChanged$.next();
+    this.cartItems$$.next(this.cartItems);
   }
 
-  addToCart(product: ProductModel): void {
+  addProduct(product: ProductModel): void {
     let cartItemIndex = this.cartItems.findIndex(item => item.product.id === product.id);
     if (cartItemIndex >= 0) {
-      this.cartItems[cartItemIndex].quantity++;
+      this.cartItems[cartItemIndex] = {...this.cartItems[cartItemIndex], quantity: this.cartItems[cartItemIndex].quantity + 1 }
     } else {
       this.cartItems.push(new CartItemModel(product, 1));
     }
     
-    this.cartListChanged$.next();
+    this.cartItems$$.next(this.cartItems);
   }
 
-  deleteCartItem(item: CartItemModel): void {
+  removeProduct(item: CartItemModel): void {
     let index = this.cartItems.findIndex(cartItem => cartItem.product.id === item.product.id);
     if (index >= 0) {
       this.cartItems.splice(index, 1);
     }
+
+    this.cartItems$$.next(this.cartItems);
   }
 
   increaseQuantity(item: CartItemModel): void {
     let index = this.cartItems.findIndex(cartItem => cartItem.product.id === item.product.id);
     if (index >= 0) {
-      this.cartItems[index].quantity++;
+      this.cartItems[index] = {...this.cartItems[index], quantity: this.cartItems[index].quantity + 1 }
     }
+
+    this.cartItems$$.next(this.cartItems);
   }
 
   decreaseQuantity(item: CartItemModel): void {
     let index = this.cartItems.findIndex(cartItem => cartItem.product.id === item.product.id);
     if (index >= 0) {
-      this.cartItems[index].quantity--;
+      this.cartItems[index] = {...this.cartItems[index], quantity: this.cartItems[index].quantity - 1 }
       if (this.cartItems[index].quantity == 0) {
-        this.deleteCartItem(this.cartItems[index]);
+        this.cartItems.splice(index, 1);
       }
     }
+
+    this.cartItems$$.next(this.cartItems);
   }
 }

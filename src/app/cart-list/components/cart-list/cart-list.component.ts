@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 
-import { ProductModel } from "src/app/shared/models/product.model";
 import { CartService } from "../../services/cart.service";
-import { Subscription, tap } from "rxjs";
+import { Observable, Subscription, tap } from "rxjs";
 import { CartItemModel } from "../../models/cart-item.model";
 
 @Component({
@@ -12,18 +11,21 @@ import { CartItemModel } from "../../models/cart-item.model";
 })
 export class CartListComponent implements OnInit, OnDestroy {
 
-  cartProducts!: CartItemModel[];
+  cartProducts$!: Observable<CartItemModel[]>;
   totalCost!: number;
   totalQuantity!: number;
+  isEmptyCart!: boolean;
   private cartListChangedSubscription!: Subscription;
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.refreshCartDetails();
+    this.cartProducts$ = this.cartService.getProducts();
 
-    this.cartListChangedSubscription = this.cartService.cartListChanged$.asObservable().pipe(
-      tap(() => this.refreshCartDetails())
+    this.cartListChangedSubscription = this.cartProducts$.pipe(
+      tap(() => {
+        this.refreshCartDetails();
+      })
     ).subscribe();
   }
 
@@ -36,28 +38,24 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   onEmptyCart(): void {
-    this.cartService.emptyCart();
-    this.refreshCartDetails();
+    this.cartService.removeAllProducts();
   }
 
   onDeleteItem(item: CartItemModel): void {
-    this.cartService.deleteCartItem(item);
-    this.refreshCartDetails();
+    this.cartService.removeProduct(item);
   }
 
   onQuantityIncrease(item: CartItemModel): void {
     this.cartService.increaseQuantity(item);
-    this.refreshCartDetails();
   }
 
   onQuantityDecrease(item: CartItemModel): void {
     this.cartService.decreaseQuantity(item);
-    this.refreshCartDetails();
   }
 
   private refreshCartDetails(): void {
-    this.cartProducts = [...this.cartService.getCartProducts()];
     this.totalCost = this.cartService.totalCost;
     this.totalQuantity = this.cartService.totalQuantity;
+    this.isEmptyCart = this.cartService.isEmptyCart;
   }
 }

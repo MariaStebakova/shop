@@ -1,7 +1,7 @@
 <h2>Cart</h2>
 
-<div *ngIf="cartProducts.length > 0 else emptyCart">
-    <app-cart-item *ngFor="let product of cartProducts; trackBy: trackByProducts" 
+<div *ngIf="!isEmptyCart else emptyCart">
+    <app-cart-item *ngFor="let product of cartProducts$ | async; trackBy: trackByProducts" 
         [cartItem]="product"
         (deleteItem)="onDeleteItem($event)"
         (increaseQuantity)="onQuantityIncrease($event)"
@@ -9,7 +9,7 @@
     </app-cart-item>
     <p>Total cost: {{ totalCost }}$.</p>
     <p>Total quantity: {{ totalQuantity }}.</p>
-    <button (click)="onEmptyCart()">Empty cart</button>
+    <button class="btn btn-danger" (click)="onEmptyCart()">Empty cart</button>
 </div>
 
 <ng-template #emptyCart>
