@@ -13,7 +13,6 @@ import { SharedModule } from '../shared/shared.module';
     ProductListComponent
   ],
   imports: [
-    CommonModule,
     SharedModule
   ],
   exports: [

@@ -53,7 +53,7 @@ export class CartService {
       this.cartItems.push(new CartItemModel(product, 1));
     }
     
-    this.cartItems$$.next(this.cartItems);
+    this.cartItems$$.next([...this.cartItems]);
   }
 
   removeProduct(item: CartItemModel): void {
@@ -62,7 +62,7 @@ export class CartService {
       this.cartItems.splice(index, 1);
     }
 
-    this.cartItems$$.next(this.cartItems);
+    this.cartItems$$.next([...this.cartItems]);
   }
 
   increaseQuantity(item: CartItemModel): void {
@@ -71,7 +71,7 @@ export class CartService {
       this.cartItems[index] = {...this.cartItems[index], quantity: this.cartItems[index].quantity + 1 }
     }
 
-    this.cartItems$$.next(this.cartItems);
+    this.cartItems$$.next([...this.cartItems]);
   }
 
   decreaseQuantity(item: CartItemModel): void {
@@ -83,6 +83,6 @@ export class CartService {
       }
     }
 
-    this.cartItems$$.next(this.cartItems);
+    this.cartItems$$.next([...this.cartItems]);
   }
 }

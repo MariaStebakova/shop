@@ -1,7 +1,17 @@
 <h2>Cart</h2>
 
 <div *ngIf="!isEmptyCart else emptyCart">
-    <app-cart-item *ngFor="let product of cartProducts$ | async; trackBy: trackByProducts" 
+    <div class="form-group">
+        <label class="control-label" for="sortOptionsDDL">Sort by: </label>
+        <select class="form-control" name="sortOptionsDDL" [(ngModel)]="selectedSortOption" (change)="onSortOptionChanged()">
+            <option *ngFor="let sortOption of sortOptions" [ngValue]="sortOption">{{ sortOption.name }}</option>
+        </select>
+        <label class="control-label" for="isAscCheckbox">Asc: </label>
+        &nbsp;
+        <input name="isAscCheckbox" type="checkbox" [(ngModel)]="isAscSortOrder"
+            [disabled]="selectedSortOption.name === 'None'">
+    </div>
+    <app-cart-item *ngFor="let product of (cartProducts$ | async | orderBy : selectedSortOption.value : isAscSortOrder); trackBy: trackByProducts" 
         [cartItem]="product"
         (deleteItem)="onDeleteItem($event)"
         (increaseQuantity)="onQuantityIncrease($event)"

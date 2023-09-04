@@ -65,3 +65,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - bootstrap version from 5.3.1 to 3.4.1
 - bootstrap css styles usage
 - first component to use all new services
+
+## [1.0.4] - 2023-09-04
+
+## Added
+
+- orderBy pipe: used in cart-list.component
+- ddl and checkbox to select sort option in cart-list.component
+- lodash and types/lodash packages
+
+## Changed
+
+- product-list.component to use Observable for products and async pipe for *ngFor
+- product.component to use uppercase pipe for product name and currency pipe for price
+- cart-item.component to use currency pipe for price

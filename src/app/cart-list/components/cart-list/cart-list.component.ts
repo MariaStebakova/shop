@@ -15,6 +15,26 @@ export class CartListComponent implements OnInit, OnDestroy {
   totalCost!: number;
   totalQuantity!: number;
   isEmptyCart!: boolean;
+  sortOptions = [
+    {
+      name: "None",
+      value: ""
+    },
+    {
+      name: "Name",
+      value: "product.name"
+    },
+    {
+      name: "Price",
+      value: "product.price"
+    },
+    {
+      name: "Quantity",
+      value: "quantity"
+    }
+  ]
+  selectedSortOption: { name: string, value: string } = this.sortOptions[0];
+  isAscSortOrder: boolean = false; 
   private cartListChangedSubscription!: Subscription;
 
   constructor(private cartService: CartService) { }
@@ -51,6 +71,10 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   onQuantityDecrease(item: CartItemModel): void {
     this.cartService.decreaseQuantity(item);
+  }
+
+  onSortOptionChanged(): void {
+    console.log("Sort option changed to " + this.selectedSortOption.name);
   }
 
   private refreshCartDetails(): void {

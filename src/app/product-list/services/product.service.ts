@@ -2,20 +2,21 @@ import { Injectable } from "@angular/core";
 
 import { ProductModel } from "../../shared/models/product.model";
 import { Category } from "src/app/shared/enums/category.enum";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class ProductService {
 
-  private products: ProductModel[];
+  private products$$!: BehaviorSubject<ProductModel[]>;
 
   constructor() { 
-    this.products = this.createProducts();
+    this.products$$ = new BehaviorSubject<ProductModel[]>(this.createProducts());
   }
 
-  getProducts(): ProductModel[] {
-    return this.products;
+  getProducts(): Observable<ProductModel[]> {
+    return this.products$$.asObservable();
   }
 
   private createProducts(): ProductModel[] {

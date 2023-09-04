@@ -1,9 +1,9 @@
 <div class="panel panel-default" appBorder borderColor="blue">
-    <div class="panel-heading">{{ product.name }}</div>
+    <div class="panel-heading">{{ product.name | uppercase}}</div>
     <div class="panel-body">
         <ul>
             <li>Description: {{ product.description }}</li>
-            <li>Price: {{ product.price }}$</li>
+            <li>Price: {{ product.price | currency : 'USD' : true }}</li>
             <li>Category: {{ product.category }}</li>
             <li>{{ product.isAvailable ? "Available" : "Not available"}}</li>
         </ul>
