@@ -9,7 +9,7 @@ import { ProductsModule } from './product-list/products.module';
 import { SharedModule } from './shared/shared.module';
 import { APPINFO } from './core/services/constants.service';
 import { GeneratorFactory, GeneratorToken5 } from './core/services/generator.factory';
-import { GeneratorService } from './core/services/generator';
+import { GeneratorService } from './core/services/generator.service';
 
 @NgModule({
   declarations: [

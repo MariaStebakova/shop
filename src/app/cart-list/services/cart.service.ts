@@ -17,8 +17,13 @@ export class CartService {
     this.cartItems.forEach(item => {
       total += item.product.price * item.quantity
     });
-
     return total;
+
+    // альтернативный вариант, который не требует инициализации переменной total
+    // return this.cartItems.reduce((acc, item) => {
+    //   return acc + item.product.price * item.quantity;
+    // }, 0);
+
   }
 
   get totalQuantity(): number {
@@ -52,7 +57,7 @@ export class CartService {
     } else {
       this.cartItems.push(new CartItemModel(product, 1));
     }
-    
+
     this.cartItems$$.next(this.cartItems);
   }
 
