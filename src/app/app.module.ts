@@ -10,18 +10,27 @@ import { SharedModule } from './shared/shared.module';
 import { APPINFO } from './core/services/constants.service';
 import { GeneratorFactory, GeneratorToken5 } from './core/services/generator.factory';
 import { GeneratorService } from './core/services/generator.service';
+import { Router } from '@angular/router';
+import { OrdersModule } from './orders/orders.module';
+import { LoginComponent } from './login/login.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FirstComponent
+    FirstComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    
     CartModule,
     ProductsModule,
-    SharedModule
+    SharedModule,
+    OrdersModule,
+    AdminModule,
+
+    AppRoutingModule
   ],
   providers: [
     { provide: APPINFO, useValue: { App: "Shop", Ver: "1.0", APP_URL: "https://localhost:4200/"} },

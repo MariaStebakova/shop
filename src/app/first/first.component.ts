@@ -1,11 +1,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { APPINFO, AppInfoConfig, ConfigModel, ConfigOptionsService, GeneratorToken5, LocalStorageService } from '../core';
+import { Category } from '../shared';
 
-import { Category } from '../shared/enums/category.enum';
-import { LocalStorageService } from '../core/services/local-storage.service';
-import { APPINFO, AppInfoConfig } from '../core/services/constants.service';
-import { GeneratorToken5 } from '../core/services/generator.factory';
-import { ConfigOptionsService } from '../core/services/config-options.service';
-import { ConfigModel } from '../core/models/config.model';
 
 @Component({
   selector: 'app-first',

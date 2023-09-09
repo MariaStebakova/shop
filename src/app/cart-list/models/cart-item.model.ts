@@ -1,4 +1,4 @@
-import { ProductModel } from "src/app/shared/models/product.model";
+import { ProductModel } from "src/app/shared";
 
 export class CartItemModel {
     constructor(

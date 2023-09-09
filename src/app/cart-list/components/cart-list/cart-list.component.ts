@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-
-import { CartService } from "../../services/cart.service";
 import { Observable, Subscription, tap } from "rxjs";
-import { CartItemModel } from "../../models/cart-item.model";
+
+import { CartItemModel, CartService } from "../..";
 
 @Component({
   selector: "app-cart-list",
@@ -53,7 +52,7 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.cartListChangedSubscription.unsubscribe();
   }
 
-  trackByProducts(index: number, item: CartItemModel): number {
+  trackByProducts(index: number, item: CartItemModel): number | undefined {
     return item.product.id;
   }
 

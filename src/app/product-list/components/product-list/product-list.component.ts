@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-
-import { ProductModel } from "../../../shared/models/product.model";
-import { ProductService } from "../../services/product.service";
-import { CartService } from "src/app/cart-list/services/cart.service";
 import { Observable } from "rxjs";
+import { Router } from "@angular/router";
+
+import { ProductModel } from "src/app/shared";
+import { ProductService } from "../../services/product.service";
 
 @Component({
   selector: "app-product-list",
@@ -16,14 +16,14 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private cartService: CartService
+    private router: Router
     ) { }
 
   ngOnInit(): void {
     this.products$ = this.productService.getProducts();
   }
 
-  onAddToCart(product: ProductModel): void {
-    this.cartService.addProduct(product);
+  onViewProduct(product: ProductModel): void {
+    this.router.navigate(['/product', product.id])
   }
 }

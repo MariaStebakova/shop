@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable, map } from "rxjs";
 
-import { ProductModel } from "../../shared/models/product.model";
-import { Category } from "src/app/shared/enums/category.enum";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Category, ProductModel } from "src/app/shared";
 
 @Injectable({
   providedIn: "root"
@@ -17,6 +16,14 @@ export class ProductService {
 
   getProducts(): Observable<ProductModel[]> {
     return this.products$$.asObservable();
+  }
+
+  getProductById(id: number): Observable<ProductModel | undefined> {
+    return this.getProducts().pipe(
+      map((products: ProductModel[]) => {
+        return products.find(p => p.id === id)
+      })
+    );
   }
 
   private createProducts(): ProductModel[] {

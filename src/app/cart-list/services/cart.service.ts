@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
-
-import { ProductModel } from "src/app/shared/models/product.model";
-import { CartItemModel } from "../models/cart-item.model";
 import { BehaviorSubject, Observable } from "rxjs";
+
+import { CartItemModel } from "..";
+import { ProductModel } from "src/app/shared";
+import { LocalStorageService } from "src/app/core";
 
 @Injectable({
   providedIn: "root"
@@ -15,7 +16,7 @@ export class CartService {
   get totalCost(): number {
     let total = 0;
     this.cartItems.forEach(item => {
-      total += item.product.price * item.quantity
+      total += (item.product.price ?? 0) * item.quantity
     });
 
     return total;
@@ -34,7 +35,10 @@ export class CartService {
     return this.cartItems.length <= 0;
   }
 
-  constructor() { }
+  constructor(private localStorageService: LocalStorageService) {
+    this.cartItems = this.localStorageService.getItem('cart') ?? [];
+    this.cartItems$$.next([...this.cartItems]);
+  }
 
   getProducts(): Observable<CartItemModel[]> {
     return this.cartItems$$.asObservable();
@@ -42,6 +46,7 @@ export class CartService {
 
   removeAllProducts(): void {
     this.cartItems = [];
+    this.localStorageService.removeItem('cart');
     this.cartItems$$.next(this.cartItems);
   }
 
@@ -53,6 +58,7 @@ export class CartService {
       this.cartItems.push(new CartItemModel(product, 1));
     }
     
+    this.localStorageService.setItem('cart', this.cartItems);
     this.cartItems$$.next([...this.cartItems]);
   }
 
@@ -62,6 +68,7 @@ export class CartService {
       this.cartItems.splice(index, 1);
     }
 
+    this.localStorageService.setItem('cart', this.cartItems);
     this.cartItems$$.next([...this.cartItems]);
   }
 
@@ -71,6 +78,7 @@ export class CartService {
       this.cartItems[index] = {...this.cartItems[index], quantity: this.cartItems[index].quantity + 1 }
     }
 
+    this.localStorageService.setItem('cart', this.cartItems);
     this.cartItems$$.next([...this.cartItems]);
   }
 
@@ -83,6 +91,7 @@ export class CartService {
       }
     }
 
+    this.localStorageService.setItem('cart', this.cartItems);
     this.cartItems$$.next([...this.cartItems]);
   }
 }

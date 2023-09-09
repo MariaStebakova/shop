@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { ProductModel } from "../../../shared/models/product.model";
+import { ProductModel } from "src/app/shared";
 
 @Component({
   selector: "app-product",
@@ -11,9 +12,11 @@ import { ProductModel } from "../../../shared/models/product.model";
 export class ProductComponent {
 
   @Input() product!: ProductModel;
-  @Output() addToCart: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
+  @Output() viewProduct: EventEmitter<ProductModel> = new EventEmitter();
 
-  onAddToCart() {
-    this.addToCart.emit(this.product);
+  constructor(private router: Router) {}
+
+  onViewMore() {
+    this.viewProduct.emit(this.product);
   }
 }

@@ -79,3 +79,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - product-list.component to use Observable for products and async pipe for *ngFor
 - product.component to use uppercase pipe for product name and currency pipe for price
 - cart-item.component to use currency pipe for price
+
+## [1.0.5] - 2023-09-09
+
+## Added
+
+- AppRoutingModule
+- ProductsRoutingModule
+- CartRoutingModule
+- OrdersRoutingModule
+- AdminRoutingModule
+- AdminModule
+- Admin, Admin-Products, Admin-Product-Form, Admin-Orders components
+- index.ts files for several levels
+- Product-view component
+- Login component
+- Product page title resolver for dynamic page title formation
+- Guards: Auth and IsEmptyCart
+
+## Changed
+
+- angular version upgraded to 16.2.4 for bindToComponentInputs usage
+- app component template using router outlet
+- imports for files from created index.ts files
+- product component's 'buy' button and products info are moved to created product-view component
+- cart service to store cart info in local storage
