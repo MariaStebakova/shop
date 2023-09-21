@@ -104,3 +104,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - imports for files from created index.ts files
 - product component's 'buy' button and products info are moved to created product-view component
 - cart service to store cart info in local storage
+
+## [1.0.6] - 2023-09-21
+
+## Added
+- backend with db in db.json
+- concurrently package installed
+- products promise service
+- cart observable service
+- timing interceptor
+- app settings service and app-settings.json
+
+## Changed
+- cart service to store cart in db via cart observable service instead of local storage
+- ability to view products, edit them and add new product for admin
+- product-related components to use new products promise service
+- sort options storage in local storage or app-settings.json file

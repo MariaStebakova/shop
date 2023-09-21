@@ -1,0 +1,78 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Belt",
+      "description": "A belt for cats",
+      "price": 12,
+      "category": "Animals",
+      "isAvailable": true
+    },
+    {
+      "id": 2,
+      "name": "T-shirt",
+      "description": "Women t-shirt",
+      "price": 30,
+      "category": "Clothes",
+      "isAvailable": true
+    },
+    {
+      "id": 3,
+      "name": "Sandals",
+      "description": "Kids summer sandals",
+      "price": 35,
+      "category": "Clothes",
+      "isAvailable": false
+    },
+    {
+      "id": 4,
+      "name": "Lamp",
+      "description": "A bedroom warm-light lamp",
+      "price": 50,
+      "category": "Home",
+      "isAvailable": true
+    },
+    {
+      "id": 5,
+      "name": "Mascara",
+      "description": "L'oreal black mascara",
+      "price": 15,
+      "category": "Beauty",
+      "isAvailable": true
+    },
+    {
+      "name": "Foundation",
+      "description": "Clinique foundation SPF 20 light beige",
+      "price": 50,
+      "category": "Beauty",
+      "isAvailable": true,
+      "id": 6
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "product": {
+        "id": 1,
+        "name": "Belt",
+        "description": "A belt for cats",
+        "price": 12,
+        "category": "Animals",
+        "isAvailable": true
+      },
+      "quantity": 7
+    },
+    {
+      "id": 2,
+      "product": {
+        "id": 2,
+        "name": "T-shirt",
+        "description": "Women t-shirt",
+        "price": 30,
+        "category": "Clothes",
+        "isAvailable": true
+      },
+      "quantity": 1
+    }
+  ]
+}

@@ -1,12 +1,14 @@
 <h3>Admin</h3>
+<p>You are in admin mode.</p>
 <nav>
   <ul class="nav nav-tabs">
     <li routerLinkActive="active">
-      <a routerLink="./orders" queryParamsHandling="preserve" [preserveFragment]="true">Manage Orders</a>
+      <a routerLink="./products" queryParamsHandling="preserve" [preserveFragment]="true">Manage Products</a>
     </li>
     <li routerLinkActive="active">
-      <a routerLink="./products" queryParamsHandling="preserve" [preserveFragment]="true">Manage Products</a>
+      <a routerLink="./orders" queryParamsHandling="preserve" [preserveFragment]="true">Manage Orders</a>
     </li>
   </ul>
 </nav>
+<br>
 <router-outlet></router-outlet>

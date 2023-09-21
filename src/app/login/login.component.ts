@@ -14,7 +14,9 @@ export class LoginComponent {
   constructor(
     public authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.selectedRole = this.authService.roles[1];
+  }
 
   onLogin(): void {
     const observer = {

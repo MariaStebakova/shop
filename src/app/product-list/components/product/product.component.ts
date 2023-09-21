@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
-import { Router } from "@angular/router";
 
 import { ProductModel } from "src/app/shared";
 
@@ -13,8 +12,6 @@ export class ProductComponent {
 
   @Input() product!: ProductModel;
   @Output() viewProduct: EventEmitter<ProductModel> = new EventEmitter();
-
-  constructor(private router: Router) {}
 
   onViewMore() {
     this.viewProduct.emit(this.product);

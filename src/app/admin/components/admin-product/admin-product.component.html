@@ -1,5 +1,5 @@
-<div class="panel panel-default" appBorder borderColor="blue">
-    <div class="panel-heading">{{ product.name | uppercase}}</div>
+<div class="panel panel-default">
+    <div class="panel-heading">{{ product.name}}</div>
     <div class="panel-body">
         <ul>
             <li>Description: {{ product.description }}</li>
@@ -7,11 +7,11 @@
             <li>Category: {{ product.category }}</li>
             <li>{{ product.isAvailable ? "Available" : "Not available"}}</li>
         </ul>
-        <button class="btn btn-primary btn-sm" [disabled]="!product.isAvailable" (click)="onAddToCart()">
-            Buy
+        <button class="btn btn-primary btn-sm" (click)="onEdit()">
+            Edit
         </button>
-        <button class="btn btn-secondary btn-sm" (click)="onGoBack()">
-            Back
+        <button class="btn btn-danger btn-sm" (click)="onDelete()">
+            Delete
         </button>
     </div>
 </div>

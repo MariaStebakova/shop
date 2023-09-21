@@ -10,10 +10,10 @@ import { SharedModule } from './shared/shared.module';
 import { APPINFO } from './core/services/constants.service';
 import { GeneratorFactory, GeneratorToken5 } from './core/services/generator.factory';
 import { GeneratorService } from './core/services/generator.service';
-import { Router } from '@angular/router';
 import { OrdersModule } from './orders/orders.module';
 import { LoginComponent } from './login/login.component';
 import { AdminModule } from './admin/admin.module';
+import { httpInterceptorProviders } from './core/interceptors';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,8 @@ import { AdminModule } from './admin/admin.module';
   ],
   providers: [
     { provide: APPINFO, useValue: { App: "Shop", Ver: "1.0", APP_URL: "https://localhost:4200/"} },
-    { provide: GeneratorToken5, useFactory: GeneratorFactory(5), deps: [GeneratorService] }
+    { provide: GeneratorToken5, useFactory: GeneratorFactory(5), deps: [GeneratorService] },
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

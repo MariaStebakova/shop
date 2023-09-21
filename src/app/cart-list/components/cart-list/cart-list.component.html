@@ -9,7 +9,7 @@
         <label class="control-label" for="isAscCheckbox">Asc: </label>
         &nbsp;
         <input name="isAscCheckbox" type="checkbox" [(ngModel)]="isAscSortOrder"
-            [disabled]="selectedSortOption.name === 'None'">
+            [disabled]="selectedSortOption.name === 'None'" (change)="onSortOrderChanged()">
     </div>
     <app-cart-item *ngFor="let product of (cartProducts$ | async | orderBy : selectedSortOption.value : isAscSortOrder); trackBy: trackByProducts" 
         [cartItem]="product"

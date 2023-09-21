@@ -3,10 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent, AdminOrdersComponent, AdminProductFormComponent, AdminProductsComponent } from './components';
 import { canActivateAuthGuard, canActivateChildAuthGuard } from '../core';
+import { AdminProductComponent } from './components/admin-product/admin-product.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'admin',
     component: AdminComponent,
     title: 'Admin',
     canActivate: [canActivateAuthGuard],
@@ -30,5 +31,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule {
-  static components = [AdminProductsComponent, AdminProductFormComponent, AdminOrdersComponent, AdminComponent];
+  static components = [AdminProductsComponent, AdminProductFormComponent, AdminOrdersComponent, AdminComponent, AdminProductComponent];
 }

@@ -1,1 +1,10 @@
-<p>admin-products works!</p>
+<div>
+    <button class="btn btn-primary" (click)="onCreateProduct()">New Product</button>
+    <br><br>
+    <app-admin-product 
+        *ngFor="let product of products$ | async" 
+        [product]="product"
+        (editProduct)="onEditProduct($event)"
+        (deleteProduct)="onDeleteProduct($event)">
+    </app-admin-product>
+</div>

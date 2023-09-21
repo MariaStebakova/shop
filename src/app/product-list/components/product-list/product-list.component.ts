@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 
 import { ProductModel } from "src/app/shared";
-import { ProductService } from "../../services/product.service";
+import { ProductsPromiseService } from "../..";
 
 @Component({
   selector: "app-product-list",
@@ -12,10 +11,10 @@ import { ProductService } from "../../services/product.service";
 })
 export class ProductListComponent implements OnInit {
 
-  products$!: Observable<ProductModel[]>;
+  products$!: Promise<ProductModel[]>;
 
   constructor(
-    private productService: ProductService,
+    private productService: ProductsPromiseService,
     private router: Router
     ) { }
 

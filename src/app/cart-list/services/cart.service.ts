@@ -1,97 +1,82 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable, forkJoin, map, switchMap } from "rxjs";
 
-import { CartItemModel } from "..";
+import { CartItemModel, CartObservableService } from "..";
 import { ProductModel } from "src/app/shared";
-import { LocalStorageService } from "src/app/core";
 
 @Injectable({
   providedIn: "root"
 })
 export class CartService {
 
-  cartItems$$: BehaviorSubject<CartItemModel[]> = new BehaviorSubject<CartItemModel[]>([]);
-  private cartItems: CartItemModel[] = [];
+  constructor(
+    private cartObservableService: CartObservableService
+  ) { }
 
-  get totalCost(): number {
+  getProducts(): Observable<CartItemModel[]> {
+    return this.cartObservableService.getCartItems();
+  }
+
+  removeAllProducts(): Observable<void[]> {
+    return this.getProducts().pipe(
+      map(items => items.map(item => item.id)),
+      switchMap(ids => {
+        return forkJoin(ids.map(id => this.cartObservableService.deleteCartItem(id)))
+      })
+    );
+  }
+
+  addProduct(product: ProductModel): Observable<CartItemModel> {
+    return this.cartObservableService.getCartItems().pipe(
+      switchMap((cartItems: CartItemModel[]) => {
+        let cartItemIndex = cartItems.findIndex(item => item.product?.id === product.id);
+        if (cartItemIndex >= 0) {
+          return this.increaseQuantity(cartItems[cartItemIndex]);
+        } else {
+          const newId = cartItems.length > 0 ? cartItems[cartItems.length - 1].id + 1 : 1;
+          return this.cartObservableService.createCartItem(new CartItemModel(newId, product, 1))
+        }
+      })
+    )
+  }
+
+  removeProduct(item: CartItemModel): Observable<void> {
+    return this.cartObservableService.deleteCartItem(item.id);
+  }
+
+  increaseQuantity(item: CartItemModel): Observable<CartItemModel> {
+    const newQuantity = item.quantity + 1;
+    return this.cartObservableService.updateCartItem({...item, quantity: newQuantity});
+  }
+
+  decreaseQuantity(item: CartItemModel): Observable<CartItemModel | void> {
+    const newQuantity = item.quantity - 1;
+    if (newQuantity <= 0) {
+      return this.removeProduct(item);
+    } else {
+      return this.cartObservableService.updateCartItem({...item, quantity: newQuantity});
+    }
+  }
+
+  totalCost(cartItems: CartItemModel[]): number {
     let total = 0;
-    this.cartItems.forEach(item => {
+    cartItems.forEach(item => {
       total += (item.product.price ?? 0) * item.quantity
     });
 
     return total;
   }
 
-  get totalQuantity(): number {
+  totalQuantity(cartItems: CartItemModel[]): number {
     let total = 0;
-    this.cartItems.forEach(item => {
+    cartItems.forEach(item => {
       total += item.quantity
     });
 
     return total;
   }
 
-  get isEmptyCart(): boolean {
-    return this.cartItems.length <= 0;
-  }
-
-  constructor(private localStorageService: LocalStorageService) {
-    this.cartItems = this.localStorageService.getItem('cart') ?? [];
-    this.cartItems$$.next([...this.cartItems]);
-  }
-
-  getProducts(): Observable<CartItemModel[]> {
-    return this.cartItems$$.asObservable();
-  }
-
-  removeAllProducts(): void {
-    this.cartItems = [];
-    this.localStorageService.removeItem('cart');
-    this.cartItems$$.next(this.cartItems);
-  }
-
-  addProduct(product: ProductModel): void {
-    let cartItemIndex = this.cartItems.findIndex(item => item.product.id === product.id);
-    if (cartItemIndex >= 0) {
-      this.cartItems[cartItemIndex] = {...this.cartItems[cartItemIndex], quantity: this.cartItems[cartItemIndex].quantity + 1 }
-    } else {
-      this.cartItems.push(new CartItemModel(product, 1));
-    }
-    
-    this.localStorageService.setItem('cart', this.cartItems);
-    this.cartItems$$.next([...this.cartItems]);
-  }
-
-  removeProduct(item: CartItemModel): void {
-    let index = this.cartItems.findIndex(cartItem => cartItem.product.id === item.product.id);
-    if (index >= 0) {
-      this.cartItems.splice(index, 1);
-    }
-
-    this.localStorageService.setItem('cart', this.cartItems);
-    this.cartItems$$.next([...this.cartItems]);
-  }
-
-  increaseQuantity(item: CartItemModel): void {
-    let index = this.cartItems.findIndex(cartItem => cartItem.product.id === item.product.id);
-    if (index >= 0) {
-      this.cartItems[index] = {...this.cartItems[index], quantity: this.cartItems[index].quantity + 1 }
-    }
-
-    this.localStorageService.setItem('cart', this.cartItems);
-    this.cartItems$$.next([...this.cartItems]);
-  }
-
-  decreaseQuantity(item: CartItemModel): void {
-    let index = this.cartItems.findIndex(cartItem => cartItem.product.id === item.product.id);
-    if (index >= 0) {
-      this.cartItems[index] = {...this.cartItems[index], quantity: this.cartItems[index].quantity - 1 }
-      if (this.cartItems[index].quantity == 0) {
-        this.cartItems.splice(index, 1);
-      }
-    }
-
-    this.localStorageService.setItem('cart', this.cartItems);
-    this.cartItems$$.next([...this.cartItems]);
+  isEmptyCart(cartItems: CartItemModel[]): boolean {
+    return cartItems.length <= 0;
   }
 }
