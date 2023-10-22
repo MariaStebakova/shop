@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ProductsPromiseService } from 'src/app/product-list';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { selectProductsData } from 'src/app/core/@ngrx';
 import { ProductModel } from 'src/app/shared';
+import * as ProductsActions from '../../../core/@ngrx/products/products.actions';
+import * as RouterActions from '../../../core/@ngrx/router/router.actions';
 
 @Component({
   selector: 'app-admin-products',
@@ -10,30 +14,29 @@ import { ProductModel } from 'src/app/shared';
 })
 export class AdminProductsComponent implements OnInit {
 
-  products$!: Promise<ProductModel[]>;
+  products$!: Observable<readonly ProductModel[]>;
+  productsError$!: Observable<Error | string | null>;
 
-  constructor( 
-    private productsService: ProductsPromiseService,
-    private router: Router
+  constructor(
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.products$ = this.productsService.getProducts();
+    this.products$ = this.store.select(selectProductsData);
+    this.store.dispatch(ProductsActions.getProducts());
   }
 
   onEditProduct(product: ProductModel): void {
-    this.router.navigate(['admin/products/edit', product.id]);
+    this.store.dispatch(RouterActions.go({ path: ['admin/products/edit', product.id], }));
   }
 
   onCreateProduct(): void {
-    this.router.navigate(['admin/product/add']);
+    this.store.dispatch(RouterActions.go({ path: ['admin/product/add'] }));
   }
 
   onDeleteProduct(product: ProductModel): void {
     if (product.id) {
-      this.productsService.deleteProduct(product.id)
-        .then(() => this.products$ = this.productsService.getProducts())
-        .catch(err => console.log(err))
+      this.store.dispatch(ProductsActions.deleteProduct({ product }));
     }
   }
 }

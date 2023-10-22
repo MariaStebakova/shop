@@ -1,6 +1,10 @@
-import { Component, DestroyRef } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
+import { Store } from '@ngrx/store';
+
 import { AuthService } from '../core';
+import * as RouterActions from '../core/@ngrx/router/router.actions';
+
 
 @Component({
   selector: 'app-login',
@@ -13,7 +17,7 @@ export class LoginComponent {
 
   constructor(
     public authService: AuthService,
-    private router: Router
+    private store: Store
   ) {
     this.selectedRole = this.authService.roles[1];
   }
@@ -30,7 +34,7 @@ export class LoginComponent {
             preserveFragment: true
           };
 
-          this.router.navigate([redirect], navigationExtras);
+          this.store.dispatch(RouterActions.go({ path: [redirect], extras: navigationExtras }));
         }
       }
     };

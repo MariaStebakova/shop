@@ -120,3 +120,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ability to view products, edit them and add new product for admin
 - product-related components to use new products promise service
 - sort options storage in local storage or app-settings.json file
+
+## [1.0.7] - 2023-10-22
+
+## Added
+- injected @ngrx/store, @ngrx/effects, @ngrx/router-store
+- described Products and App states
+- products actions
+- products reducer
+- products feature and state selectors
+- products effects
+- router actions and effects
+- custom serializer for retreiving queryParams from router
+- auto-unsubscribe decorator to unsubscibe from subscription on component destroy
+
+## Changed
+- components got free of data services and router dependecies
+- injected store for product-related components
+- added persistance for login state via local storage

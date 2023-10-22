@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,7 @@ import { OrdersModule } from './orders/orders.module';
 import { LoginComponent } from './login/login.component';
 import { AdminModule } from './admin/admin.module';
 import { httpInterceptorProviders } from './core/interceptors';
+import { RootStoreModule } from './core/@ngrx/root-store.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { httpInterceptorProviders } from './core/interceptors';
     OrdersModule,
     AdminModule,
 
-    AppRoutingModule
+    RootStoreModule,
+    AppRoutingModule,
+      
   ],
   providers: [
     { provide: APPINFO, useValue: { App: "Shop", Ver: "1.0", APP_URL: "https://localhost:4200/"} },

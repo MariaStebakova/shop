@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Belt",
       "description": "A belt for cats",
-      "price": 12,
+      "price": 15,
       "category": "Animals",
       "isAvailable": true
     },

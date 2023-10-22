@@ -38,7 +38,7 @@ export class ProductsPromiseService {
       .catch(this.handleError);
   }
 
-  deleteProduct(productId: number): Promise<void> {
+  deleteProduct(productId: number | undefined): Promise<void> {
     const url = `${this.productsUrl}/${productId}`;
     return firstValueFrom(this.httpClient.delete(url))
       .catch(this.handleError);

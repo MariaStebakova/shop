@@ -1,49 +1,46 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Subscription, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { ProductModel } from 'src/app/shared';
 import { CartService } from 'src/app/cart-list';
-import { ProductsPromiseService } from '../..';
-import { Subscription, tap } from 'rxjs';
+import { selectSelectedProductByUrl } from 'src/app/core/@ngrx';
+import * as RouterActions from '../../../core/@ngrx/router/router.actions';
+import { AutoUnsubscribe } from 'src/app/core/decorators';
 
 @Component({
   selector: 'app-product-view',
   templateUrl: './product-view.component.html',
   styleUrls: ['./product-view.component.css']
 })
-export class ProductViewComponent implements OnInit, OnDestroy {
+@AutoUnsubscribe()
+export class ProductViewComponent implements OnInit {
 
   @Input() productID!: string;
   product!: ProductModel;
   private sub!: Subscription;
 
   constructor(
-    private productService: ProductsPromiseService,
-    private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
     this.product = new ProductModel();
 
-    this.productService.getProduct(+this.productID)
-      .then((productModel: ProductModel) => {
-        this.product = productModel;
-      })
-      .catch(err => console.log(err));
-  }
-
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.sub = this.store.select(selectSelectedProductByUrl)
+      .subscribe((product: ProductModel) => {
+        this.product = { ...product };
+      });
   }
 
   onAddToCart() {
-    this.sub = this.cartService.addProduct(this.product).pipe(
+    this.sub.add(this.cartService.addProduct(this.product).pipe(
       tap(() => this.onGoBack())
-    ).subscribe()
+    ).subscribe())
   }
 
   onGoBack(): void {
-    this.router.navigate(['/products']);
+    this.store.dispatch(RouterActions.goHome());
   }
 }

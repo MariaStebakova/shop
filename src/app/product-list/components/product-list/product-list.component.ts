@@ -1,8 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
 
 import { ProductModel } from "src/app/shared";
-import { ProductsPromiseService } from "../..";
+import { selectProductsData, selectProductsError } from "src/app/core/@ngrx";
+import * as ProductsActions from '../../../core/@ngrx/products/products.actions';
+import * as RouterActions from '../../../core/@ngrx/router/router.actions';
 
 @Component({
   selector: "app-product-list",
@@ -11,18 +14,20 @@ import { ProductsPromiseService } from "../..";
 })
 export class ProductListComponent implements OnInit {
 
-  products$!: Promise<ProductModel[]>;
+  products$!: Observable<readonly ProductModel[]>;
+  productsError$!: Observable<Error | string | null>;
 
   constructor(
-    private productService: ProductsPromiseService,
-    private router: Router
-    ) { }
+    private store: Store
+  ) { }
 
   ngOnInit(): void {
-    this.products$ = this.productService.getProducts();
+    this.products$ = this.store.select(selectProductsData);
+    this.productsError$ = this.store.select(selectProductsError);
+    this.store.dispatch(ProductsActions.getProducts());
   }
 
   onViewProduct(product: ProductModel): void {
-    this.router.navigate(['/product', product.id])
+    this.store.dispatch(RouterActions.go({ path: ['/product', product.id] }));
   }
 }
