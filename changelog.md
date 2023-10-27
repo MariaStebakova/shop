@@ -138,3 +138,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - components got free of data services and router dependecies
 - injected store for product-related components
 - added persistance for login state via local storage
+
+## [1.0.8] - 2023-10-27
+
+## Added
+- process order form with first, last names, email, phones, delivery and address controls
+- custom validator to check start case for first name
+- email validator directive to check if email control is 'qwerty@mail.com'
+- opportunity to add and remove multiple phones
+- centralized validation messages generation for all controls (except phone since there's no control name)
