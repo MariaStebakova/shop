@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as _ from "lodash";
+import { orderBy } from 'lodash';//  _ from "lodash";
 
 @Pipe({
   name: 'orderBy'
@@ -11,8 +11,8 @@ export class OrderByPipe implements PipeTransform {
     if (!key) {
       return array;
     }
-    
-    return _.orderBy(array, [key], [sortOrder]);
+
+    return orderBy(array, [key], [sortOrder]);
   }
 
 }
