@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
+    // Обычно подключают его в рутовом модуле
     HttpClientModule
   ],
   exports: [
