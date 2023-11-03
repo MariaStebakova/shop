@@ -147,3 +147,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - email validator directive to check if email control is 'qwerty@mail.com'
 - opportunity to add and remove multiple phones
 - centralized validation messages generation for all controls (except phone since there's no control name)
+
+## [1.0.9] - 2023-22-3
+
+## Added
+- integration tests for ProductViewComponent
+- unit tests for AuthService
+- unit tests for OrderByPipe
+- code coverage report generation
+
+## Changed
+- fixed auto-generated unit tests for AppComponent
+- order-by pipe to import only orderBy function from lodash
+- startCase validator to use the more correct pattern for a first name
