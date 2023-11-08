@@ -24,7 +24,7 @@ import { RootStoreModule } from './core/@ngrx/root-store.module';
   ],
   imports: [
     BrowserModule,
-    
+
     CartModule,
     ProductsModule,
     SharedModule,
@@ -33,7 +33,7 @@ import { RootStoreModule } from './core/@ngrx/root-store.module';
 
     RootStoreModule,
     AppRoutingModule,
-      
+
   ],
   providers: [
     { provide: APPINFO, useValue: { App: "Shop", Ver: "1.0", APP_URL: "https://localhost:4200/"} },
@@ -43,3 +43,4 @@ import { RootStoreModule } from './core/@ngrx/root-store.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+// ok
